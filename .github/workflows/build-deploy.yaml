@@ -7,18 +7,16 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   test:
-    name: Run Tests
     runs-on: ubuntu-latest
 
-    env:  # Inject secrets as environment variables
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_NAME: ${{ secrets.DB_NAME }}
+    env:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: test_db
 
     steps:
     - name: Checkout code
@@ -27,7 +25,15 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.12.4"
+        python-version: "3.10"
+
+    - name: Start PostgreSQL
+      run: |
+        docker run --name postgres -e POSTGRES_USER=${{ env.DB_USER }} \
+          -e POSTGRES_PASSWORD=${{ env.DB_PASSWORD }} \
+          -e POSTGRES_DB=${{ env.DB_NAME }} \
+          -p 5432:5432 -d postgres:13
+        sleep 10  # Wait for the database to start
 
     - name: Install dependencies
       run: |
@@ -35,5 +41,4 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run tests
-      run: |
-        pytest --disable-warnings
+      run: pytest --disable-warnings
