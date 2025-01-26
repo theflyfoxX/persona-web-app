@@ -15,8 +15,13 @@ from app.services.oauth2_service import create_access_token
 
 # SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:password123@localhost:5432/fastapi_test'
 # DATABASE_URL = f"postgresql://{settings.database_user}:{settings.database_password}@{settings.database_host}:{settings.database_port}/{settings.database_name}_test"
-DATABASE_URL = 'postgresql://postgres:root@localhost:5432/postgres_test'
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "postgres")
+DB_NAME = os.getenv("DB_NAME", "postgres_test")
 
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}_test"
 
 engine = create_engine(DATABASE_URL)
 

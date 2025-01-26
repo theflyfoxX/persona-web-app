@@ -15,7 +15,7 @@ jobs:
       DB_HOST: localhost
       DB_PORT: 5432
       DB_USER: postgres
-      DB_PASSWORD: postgres
+      DB_PASSWORD: postgres  # Ensure this matches the Docker container
       DB_NAME: test_db
 
     steps:
@@ -33,11 +33,10 @@ jobs:
           -e POSTGRES_PASSWORD=${{ env.DB_PASSWORD }} \
           -e POSTGRES_DB=${{ env.DB_NAME }} \
           -p 5432:5432 -d postgres:13
-        sleep 10  # Wait for the database to start
+        sleep 10
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Run tests
