@@ -15,8 +15,8 @@ jobs:
       DB_HOST: localhost
       DB_PORT: 5432
       DB_USER: postgres
-      DB_PASSWORD: postgres  # Ensure this matches the Docker container
-      DB_NAME: test_db
+      DB_PASSWORD: root  # Ensure this matches the Docker container
+      DB_NAME: postgres
 
     steps:
     - name: Checkout code
