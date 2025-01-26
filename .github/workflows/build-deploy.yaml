@@ -17,6 +17,10 @@ jobs:
       DB_USER: postgres
       DB_PASSWORD: root  # Ensure this matches the Docker container
       DB_NAME: postgres
+      SECRET_KEY: your_secret_key
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+
 
     steps:
     - name: Checkout code
