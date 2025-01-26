@@ -10,7 +10,8 @@ from app.database import Base
 from alembic import command
 
 
-DATABASE_URL = f"postgresql://{settings.database_user}:{settings.database_password}@{settings.database_host}:{settings.database_port}/{settings.database_name}_test"
+# DATABASE_URL = f"postgresql://{settings.database_user}:{settings.database_password}@{settings.database_host}:{settings.database_port}/{settings.database_name}_test"
+DATABASE_URL = f"postgresql://postgres:root@localhost:5432/postgres_test"
 
 
 engine = create_engine(DATABASE_URL)
