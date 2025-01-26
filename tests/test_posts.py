@@ -3,8 +3,7 @@ from app.schemas.post_schema import PostResponse
 
 def test_get_posts_authorized(authorized_client, test_posts):
     response = authorized_client.get("/posts/")
-    print("Response Status Code:", response.status_code)
-    print("Response JSON:", response.json()) 
+
     
     if response.status_code != 200:
         print("Error: Unauthorized. Check the token setup.")
@@ -13,8 +12,7 @@ def test_get_posts_authorized(authorized_client, test_posts):
     try:
         validated_posts = [PostResponse(**post) for post in response.json()]
     except Exception as e:
-        print("Schema Validation Failed:", e)
-        print("Response Content:", response.text)
+       
         raise e
 
     assert response.status_code == 200
@@ -36,7 +34,7 @@ def test_get_posts_unauthorized(client):
 
 def test_create_post_authorized(authorized_client, test_user):
     post_data = {
-        "title": "New Post",
+        "titles": "New Post",
         "content": "New Content",
         "user_id": test_user['id']
     }
