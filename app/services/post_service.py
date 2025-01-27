@@ -1,3 +1,4 @@
+from uuid import UUID
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException
@@ -20,7 +21,7 @@ class PostService:
         )
 
 
-    def create_post(self, post_data,user_id: int):
+    def create_post(self, post_data,user_id: UUID):
         try:
             new_post = PostModel(title=post_data.title, content=post_data.content,user_id=user_id)
             self.db.add(new_post)

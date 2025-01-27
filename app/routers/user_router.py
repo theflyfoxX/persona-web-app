@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from uuid import UUID
 from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
@@ -30,7 +31,7 @@ async def create_user(user_data: UserCreateRequest, user_service: UserService = 
         raise e
     
 @router.get("/{user_id}", response_model=UserResponse)
-async def get_user_by_id(user_id: int, user_service : UserService = Depends(get_user_service)):
+async def get_user_by_id(user_id: UUID, user_service : UserService = Depends(get_user_service)):
     try:
         return user_service.get_user_by_Id(user_id)
     except HTTPException as e:

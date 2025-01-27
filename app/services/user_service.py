@@ -1,4 +1,5 @@
 from pytest import Session
+from uuid import UUID
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
 from app.utils import hash_password
@@ -22,7 +23,7 @@ class UserService:
                 detail="An unexpected database error occurred.",
             ) from e
     
-    def get_user_by_Id(self, user_id: int):
+    def get_user_by_Id(self, user_id: UUID):
         try:
             user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
             if not user:
