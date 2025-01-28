@@ -11,6 +11,7 @@ from app.database import Base
 from alembic import command
 from app.models.post_model import PostModel
 
+from app.models.vote_model import VoteModel
 from app.services.oauth2_service import create_access_token
 
 
@@ -65,6 +66,7 @@ def test_user(client):
 
     new_user = res.json()
     new_user['password'] = user_data['password']
+    new_user['id'] = str(new_user['id']) 
     return new_user
 
 
@@ -81,6 +83,25 @@ def authorized_client(client, token):
     }
 
     return client
+
+@pytest.fixture
+def unauthorized_test_user(client):
+    """
+    Fixture to create an unauthorized test user.
+    """
+    user_data = {
+        "username": "unauthorized_ali",
+        "email": "unauthorized_ali@gmail.com",
+        "password": "Unauthorized123@",
+        "confirm_password": "Unauthorized123@"
+    }
+    res = client.post("/users/", json=user_data)
+
+    assert res.status_code == 201
+
+    new_user = res.json()
+    new_user['password'] = user_data['password']
+    return new_user
 
 
 @pytest.fixture
@@ -119,3 +140,14 @@ def test_posts(test_user, session):
     return posts
 
 
+# Add to your conftest.py
+@pytest.fixture
+def test_vote(test_posts, test_user, session):
+    vote_data = {
+        "post_id": test_posts[3].id,
+        "user_id": test_user['id']
+    }
+    new_vote = VoteModel(**vote_data)
+    session.add(new_vote)
+    session.commit()
+    

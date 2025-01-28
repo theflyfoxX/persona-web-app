@@ -16,13 +16,20 @@ class UserService:
     def get_users(self):
         try:
             return self.db.query(UserModel).all()
+            return users
         except SQLAlchemyError as e:
-            logger.error("Error fetching users.")
+            logger.error(f"Database error occurred while fetching users: {str(e)}", exc_info=True)
             raise HTTPException(
-                status_code=500,
-                detail="An unexpected database error occurred.",
+                status_code=400,
+                detail="Failed to fetch users due to a database error."
             ) from e
-    
+        except Exception as e:
+          logger.error(f"Unexpected error occurred while fetching users: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail="An unexpected error occurred while fetching users."
+        )
+        
     def get_user_by_Id(self, user_id: UUID):
         try:
             user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
@@ -33,7 +40,10 @@ class UserService:
                 )
             return user
         except SQLAlchemyError as e:
-            logger.error("Error fetching user.")
+            logger.error(f"Database error fetching user with ID {user_id}: {str(e)}")
+            raise HTTPException(status_code=400, detail="Database query failed.")
+        except Exception as e:
+            logger.error(f"Unexpected error fetching user with ID {user_id}: {str(e)}")
             raise HTTPException(
                 status_code=500,
                 detail="An unexpected database error occurred.",

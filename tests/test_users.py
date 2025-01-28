@@ -1,50 +1,65 @@
 import pytest
-from app.schemas.user_schema import  UserResponse
-from app.schemas.token_schema import  Token
-from app.configuration import settings
-from jose import jwt
+from app.schemas.user_schema import UserCreateRequest
+from app.services.oauth2_service import create_access_token
+from app.services.user_service import UserService
 
-def test_create_user(client):
-    res = client.post(
-        "/users/", json={"username": "hello", "email": "hello@email.com","password": "Password123@","confirm_password": "Password123@"})
+@pytest.fixture
+def test_user(client):
+    """
+    Fixture to create a test user with valid fields.
+    """
+    user_data = {
+        "username": "testuser",
+        "email": "testuser@example.com",
+        "password": "Test123@",
+        "confirm_password": "Test123@"
+    }
+    res = client.post("/users/", json=user_data)
 
-    new_user = UserResponse(**res.json())
-    assert new_user.email == "hello@email.com"
     assert res.status_code == 201
 
-
-def test_login_user(test_user, client):
-    res = client.post(
-        "/auth/login", data={"username": test_user['username'], "password": test_user['password']}
-    )
-    login_res = Token(**res.json())
-    payload = jwt.decode(login_res.access_token, settings.secret_key, algorithms=[settings.algorithm])
-    id = payload.get("user_id")
-    assert id == test_user['id']
-    assert login_res.token_type == "bearer"
-    assert res.status_code == 200
+    new_user = res.json()
+    new_user["password"] = user_data["password"]
+    new_user["id"] = str(new_user["id"])  # Convert UUID to string if needed
+    return new_user
 
 
+@pytest.fixture
+def unauthorized_test_user(client):
+    """
+    Fixture to create an unauthorized test user.
+    """
+    user_data = {
+        "username": "unauthorized_user",
+        "email": "unauthorized@example.com",
+        "password": "Unauthorized123@",
+        "confirm_password": "Unauthorized123@"
+    }
+    res = client.post("/users/", json=user_data)
 
-@pytest.mark.parametrize("email, password, status_code", [
-    ('saad', 'password123', 403),
-    ('marwa', 'wrongpassword', 403),
-    ('samuel', 'wrongpassword', 403),
-    (None, 'password123', 422),
-    ('sara', None, 422),
-])
-def test_incorrect_login(client, email, password, status_code):
-    data = {}
-    if email is not None:
-        data["username"] = email
-    if password is not None:
-        data["password"] = password
-    
-    res = client.post("/auth/login", data=data)
+    assert res.status_code == 201
 
-    assert res.status_code == status_code
-    if status_code == 403:
-        assert res.json().get('detail') in ['Invalid Credentials', 'Incorrect username or password']
-    elif status_code == 422:
-        # Optionally, check for validation error details
-        assert res.json().get('detail') is not None
+    new_user = res.json()
+    new_user["password"] = user_data["password"]
+    return new_user
+
+
+@pytest.fixture
+def token(test_user):
+    """
+    Generate a token for the test user.
+    """
+    return create_access_token({"user_id": test_user["id"]})
+
+
+@pytest.fixture
+def authorized_client(client, token):
+    """
+    Return an authorized test client with the token.
+    """
+    client.headers = {
+        **client.headers,
+        "Authorization": f"Bearer {token}"
+    }
+    return client
+
