@@ -24,23 +24,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# AZURE_FUNCTION_URL = "http://localhost:7071/api/myHttpFunction"
+AZURE_FUNCTION_URL = "http://localhost:7071/api/send-notification"
 
-# @app.get("/call-azure-function")
-# async def call_azure(name: str, token: str = Depends(oauth2_scheme)):
-#     """Call Azure Function with JWT Authentication"""
-#     headers = {"Authorization": f"Bearer {token}"}
+@app.get("/call-azure-function")
+async def call_azure(name: str, token: str = Depends(oauth2_scheme)):
+    """Call Azure Function with JWT Authentication"""
+    headers = {"Authorization": f"Bearer {token}"}
 
-#     async with httpx.AsyncClient() as client:
-#         response = await client.get(f"{AZURE_FUNCTION_URL}?name={name}", headers=headers)
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{AZURE_FUNCTION_URL}?name={name}", headers=headers)
     
-#     # Print raw response for debugging
-#     print("Azure Function Response:", response.status_code, response.text)
+    # Print raw response for debugging
+    print("Azure Function Response:", response.status_code, response.text)
 
-#     if response.status_code != 200:
-#         raise HTTPException(status_code=response.status_code, detail="Error calling Azure Function")
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="Error calling Azure Function")
 
-#     return response.json()
+    return response.json()
 
 
 app.include_router(post_router.router, prefix="/posts", tags=["Posts"])

@@ -7,6 +7,7 @@ from app.validators import validate_email_address, validate_password
 from app.models.user_model import UserModel
 import logging
 from sqlalchemy.exc import SQLAlchemyError
+
 logger = logging.getLogger(__name__)
 
 class UserService:

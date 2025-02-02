@@ -37,7 +37,7 @@ def test_get_posts_pagination(post_service, test_posts):
     assert posts[0].title == "2nd title"
 
 def test_create_post_success(post_service, test_user):
-    post_data = PostCreateRequest(title="New Post", content="New Content")
+    post_data =  post_service.create_post(title="New Post", content="New Content")
     new_post = post_service.create_post(post_data=post_data, user_id=test_user["id"])
     assert new_post.title == "New Post"
     assert new_post.content == "New Content"
@@ -68,7 +68,7 @@ def test_get_post_by_id_success(post_service, test_posts):
     
 
 def test_create_post_no_title(post_service, test_user):
-    post_data = PostCreateRequest(title="", content="New Content")
+    post_data = post_service.create_post(title="", content="New Content")
     with pytest.raises(HTTPException) as excinfo:
         post_service.create_post(post_data=post_data, user_id=test_user["id"])
     assert excinfo.value.status_code == 400
@@ -77,7 +77,7 @@ def test_create_post_no_title(post_service, test_user):
     
     
 def test_create_post_no_content(post_service, test_user):
-    post_data = PostCreateRequest(title="New Post", content="")
+    post_data =  post_service.create_post(title="New Post", content="")
     with pytest.raises(HTTPException) as excinfo:
         post_service.create_post(post_data=post_data, user_id=test_user["id"])
     assert excinfo.value.status_code == 400
@@ -85,7 +85,7 @@ def test_create_post_no_content(post_service, test_user):
     
     
 def test_create_post_no_title_and_content(post_service, test_user):
-    post_data = PostCreateRequest(title="", content="")
+    post_data =  post_service.create_post(title="", content="")
     with pytest.raises(HTTPException) as excinfo:
         post_service.create_post(post_data=post_data, user_id=test_user["id"])
     assert excinfo.value.status_code == 400
