@@ -3,11 +3,8 @@ from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from app import utils
 from app.services.auth_service import authenticate_user
-from app.services.user_service import UserService
 from app.services.oauth2_service import create_access_token
-from app.models.user_model import UserModel
 from app.database import get_db
-from app.schemas.user_schema import  UserLoginRequest
 from app.schemas.token_schema import Token
 
 
@@ -31,7 +28,7 @@ async def login_user(user_credentials: OAuth2PasswordRequestForm = Depends(), db
             status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Credentials"
         )
     # Store user ID (not email) in the token
-    access_token = create_access_token(data={"sub": str(user.id), "user_id": user.id})
+    access_token = create_access_token(data={"user_id": str(user.id)})
     return {"access_token": access_token, "token_type": "bearer"}
 
 

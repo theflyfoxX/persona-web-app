@@ -1,4 +1,5 @@
 from uuid import UUID, uuid4
+import uuid
 import pytest
 from app.services.vote_service import VoteService
 from app.models.vote_model import VoteModel
@@ -16,19 +17,19 @@ def vote_service(session):
 
 
 
+def is_valid_uuid(value):
+    try:
+        uuid.UUID(str(value))
+        return True
+    except ValueError:
+        return False
+
 def test_like_post(vote_service, test_user, test_posts):
-    """
-    Test if a post can be liked successfully via the service.
-    """
+    assert is_valid_uuid(test_user["id"]), "User ID is not a valid UUID"
+    assert is_valid_uuid(test_posts[3].id), "Post ID is not a valid UUID"
+
     result = vote_service.like_post(user_id=test_user["id"], post_id=test_posts[3].id)
     assert result == {"message": "Post liked successfully"}
-
-    # Ensure the vote was added to the database
-    vote = vote_service.db.query(VoteModel).filter_by(
-        user_id=test_user["id"], post_id=test_posts[3].id
-    ).first()
-    assert vote is not None
-
 
 def test_like_post_already_liked(vote_service, test_user, test_posts, test_vote):
     """

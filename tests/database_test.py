@@ -10,6 +10,9 @@ from app.database import get_db
 from app.database import Base
 from alembic import command
 
+from app.models.post_model import PostModel
+from app.models.vote_model import VoteModel
+
 
 # DATABASE_URL = f"postgresql://{settings.database_user}:{settings.database_password}@{settings.database_host}:{settings.database_port}/{settings.database_name}_test"
 
@@ -24,8 +27,9 @@ TestingSessionLocal = sessionmaker(
 
 @pytest.fixture()
 def session():
-    Base.metadata.drop_all(bind=engine)
-    Base.metadata.create_all(bind=engine)
+    Base.metadata.drop_all(bind=engine, tables=[VoteModel.__table__])  # Drop votes first
+    Base.metadata.drop_all(bind=engine, tables=[PostModel.__table__])  # Drop posts next
+    Base.metadata.drop_all(bind=engine)      
     db = TestingSessionLocal()
     try:
         yield db

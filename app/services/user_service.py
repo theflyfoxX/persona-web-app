@@ -33,15 +33,17 @@ class UserService:
     def get_user_by_Id(self, user_id: UUID):
         try:
             user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
-            if not user:
-                raise HTTPException(
-                    status_code=404,
-                    detail="User not found."
-                )
+            if user is None:
+              logger.warning(f"User with ID {user_id} not found.")
+              raise HTTPException(status_code=404, detail="User not found.")
+
             return user
+        except HTTPException as e:
+        # If it's already an HTTPException (like 404), let it propagate
+         raise e
         except SQLAlchemyError as e:
-            logger.error(f"Database error fetching user with ID {user_id}: {str(e)}")
-            raise HTTPException(status_code=400, detail="Database query failed.")
+              logger.error(f"Database error fetching user with ID {user_id}: {str(e)}")
+              raise HTTPException(status_code=400, detail="Database query failed.")
         except Exception as e:
             logger.error(f"Unexpected error fetching user with ID {user_id}: {str(e)}")
             raise HTTPException(

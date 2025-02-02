@@ -60,13 +60,15 @@ def test_user(client):
         "password": "Rassas123@",
         "confirm_password": "Rassas123@"
     }
-    res = client.post("/users/", json=user_data)
+    res = client.post("/users/create", json=user_data)
 
-    assert res.status_code == 201
+    print("DEBUG: Response Status Code:", res.status_code)
+    print("DEBUG: Response Body:", res.json())
+
+    assert res.status_code == 201  # 🚨 If this fails, check printed output
 
     new_user = res.json()
     new_user['password'] = user_data['password']
-    new_user['id'] = str(new_user['id']) 
     return new_user
 
 
@@ -95,7 +97,7 @@ def unauthorized_test_user(client):
         "password": "Unauthorized123@",
         "confirm_password": "Unauthorized123@"
     }
-    res = client.post("/users/", json=user_data)
+    res = client.post("/users/create", json=user_data)
 
     assert res.status_code == 201
 
@@ -144,8 +146,8 @@ def test_posts(test_user, session):
 @pytest.fixture
 def test_vote(test_posts, test_user, session):
     vote_data = {
-        "post_id": test_posts[3].id,
-        "user_id": test_user['id']
+        "post_id": str(test_posts[3].id),  # Convert to string
+        "user_id": str(test_user['id'])
     }
     new_vote = VoteModel(**vote_data)
     session.add(new_vote)

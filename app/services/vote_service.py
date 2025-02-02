@@ -4,6 +4,7 @@ from app.models.vote_model import VoteModel
 from app.models.post_model import PostModel
 from sqlalchemy.exc import SQLAlchemyError
 import logging
+from uuid import UUID
 
 logger = logging.getLogger(__name__)
 
@@ -11,8 +12,12 @@ class VoteService:
     def __init__(self, db: Session):
         self.db = db
 
-    def like_post(self, user_id: int, post_id: int):
+    def like_post(self, user_id: UUID, post_id: UUID):
         try:
+            # Ensure IDs are treated as UUIDs
+            user_id = str(user_id)
+            post_id = str(post_id)
+
             # Check if the post exists
             post = self.db.query(PostModel).filter(PostModel.id == post_id).first()
             if not post:
@@ -40,8 +45,12 @@ class VoteService:
                 status_code=500, detail="An unexpected database error occurred."
             )
 
-    def unlike_post(self, user_id: int, post_id: int):
+    def unlike_post(self, user_id: UUID, post_id: UUID):
         try:
+            # Ensure IDs are treated as UUIDs
+            user_id = str(user_id)
+            post_id = str(post_id)
+
             # Check if the post exists
             post = self.db.query(PostModel).filter(PostModel.id == post_id).first()
             if not post:
@@ -68,8 +77,11 @@ class VoteService:
                 status_code=500, detail="An unexpected database error occurred."
             )
 
-    def get_post_likes(self, post_id: int):
+    def get_post_likes(self, post_id: UUID):
         try:
+            # Ensure post_id is treated as UUID
+            post_id = str(post_id)
+
             # Check if the post exists
             post = self.db.query(PostModel).filter(PostModel.id == post_id).first()
             if not post:

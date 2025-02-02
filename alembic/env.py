@@ -4,8 +4,12 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from app.database import Base
+print(Base.metadata.tables.keys())
 from alembic import context
 from app.configuration import settings
+from app.models.post_model import PostModel
+from app.models.user_model import UserModel
+from app.models.vote_model import VoteModel  # Fix the incorrect import
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

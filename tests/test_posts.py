@@ -99,3 +99,5 @@ def test_get_posts_unauthorized(post_service, test_posts):
     posts = post_service.get_posts(skip=0, limit=10)
     assert len(posts) == len(test_posts)  
     
+    
+    
