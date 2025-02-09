@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.models.user_model import UserModel
 from app.services.auth_service import get_current_user
-from app.database import get_db
+from app.config.database_postgres import get_db
 from app.schemas.post_schema import PostCreateRequest, PostResponse
 from app.services.post_service import PostService
 import logging

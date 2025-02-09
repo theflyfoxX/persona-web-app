@@ -1,0 +1,15 @@
+
+-----------------------------------------------------
+.primevideo.com	TRUE	/	FALSE	1762715424	i18n-prefs	USD
+.primevideo.com	TRUE	/	FALSE	1762715424	lc-main-av	en_US
+.primevideo.com	TRUE	/	TRUE	1762715424	ubid-main-av	358-7771354-9266222
+.primevideo.com	TRUE	/	TRUE	1762715424	session-id	138-5271849-2525042
+.primevideo.com	TRUE	/	TRUE	1762715424	session-token	lXXxIYFJxWd78kPEjvHX4sT3dZfrgnEDvQpQN+emGpI473Bozy5xAGWxqDBdwD9Li8PsVx7onW1TIuus2n2c2eCghmmGqY+CSEpfmWGwH/dh9OqogBZKr4DMhJG/UvrZnGUDFl8bWaKrwVPXiQwiGWHR2T+B1kFsYpkmR+D/96PVAfQRviWgJ9KE2cbJR0hBrAUVYHkZe0crELRkQU5TC/hyMl+MX74ikdlN/sN7EzHWMGdFSnpnYzYDIuad2zBkG+3UoVcgSmPFDMMGfin3MYyDTQsieYC4Mv7HPKpnhg8O8oOW8+ABS7ZT5mevuFqTS1aAEKlOtSbHn3rmwq5vsCrsienF5mN/Ifoxsq37RpVOXgBto3UNwZb4D0Cmtg+l
+.primevideo.com	TRUE	/	TRUE	1762715424	x-main-av	"ZQSYTb7DrbCNwnrFsacogQbwevEQuBxGY8RC1ZuQVBoylDEpRtRTt@6e?fwnYv7@"
+.primevideo.com	TRUE	/	TRUE	1762715424	at-main-av	Atza|IwEBIFRkbfbS9Jxt5gEtulgq4Me8WvSvkRv-_j312DcAiUhZ_JiybY46K8a2dTxqxaQ7oqDB4BdUazgSw_ZEIZ4thcVB5FBOSqvvFtyOn2G9DTpBxuhRyCPw7NYrULwaOJHfwR17zahKXYk3Q65eM5VZv154FYjTE_YXcPvQi4TtsjySEaF25WiasBN-VlcYc4ePbD-chlIOIgrU7kahWq95fAWERvXWnYHTjsruBK806B9nHjujP8pXZHgQTd8syOWkaXk
+.primevideo.com	TRUE	/	TRUE	1762715424	sess-at-main-av	"7yWMxBdAW5AIiMga4LLZV+7scemhVkT0HsBFXsN/qnI="
+.primevideo.com	TRUE	/	TRUE	1762715424	session-id-time	2082787201l
+.primevideo.com	TRUE	/	FALSE	1762715681	av-timezone	Asia/Singapore
+www.primevideo.com	FALSE	/	FALSE	1761419676	csm-hit	tb:YS52PG64NSH2DQEPN6Z1+s-QR1SX7GDVT8KG7G8DRZ1|1731179676909&t:1731179676909&adb:adblk_yes
+--------------------------------------------------------------
+

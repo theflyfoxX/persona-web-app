@@ -1,0 +1,80 @@
+/* src/styles/auth.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth-box {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+.auth-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid black;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: #555;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.auth-button:hover {
+    background-color: #333;
+}
+
+.auth-link {
+    font-size: 14px;
+    color: black;
+    text-decoration: none;
+    display: block;
+    margin-top: 15px;
+    transition: color 0.3s ease-in-out;
+}
+
+.auth-link:hover {
+    color: #666;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}

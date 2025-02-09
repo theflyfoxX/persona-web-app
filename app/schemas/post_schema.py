@@ -1,13 +1,15 @@
 from pydantic import BaseModel
 from datetime import datetime
 
+from uuid import UUID
+
 class PostResponse(BaseModel):
-    id: int
+    id: UUID
     title: str
     content: str
     created_at: datetime
     updated_at: datetime
-    user_id: int  
+    user_id: UUID  
 
 
     class Config:

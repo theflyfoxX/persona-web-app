@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.services.vote_service import VoteService
 from app.schemas.vote_schema import  VoteRequest, VoteResponse
 from app.services.auth_service import get_current_user
-from app.database import get_db
+from app.config.database_postgres import get_db
 import logging
 
 # Initialize logger
