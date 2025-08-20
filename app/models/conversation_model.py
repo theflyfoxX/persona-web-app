@@ -15,5 +15,4 @@ class ConversationModel(Base):
     # Unique constraint to ensure a user pair has only one conversation
     __table_args__ = (UniqueConstraint("user1_id", "user2_id", name="unique_conversation"),)
 
-    # ✅ Reverse Relationship to Messages
     messages = relationship("MessageMetadataModel", back_populates="conversation")
