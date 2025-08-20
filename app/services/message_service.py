@@ -19,15 +19,15 @@ class MessageService:
 
     async def send_message(self, conversation_id: str, sender_id: str, receiver_id: str, message: str, media: str = None):
       try:
-        print(f"📩 Sending Message: {sender_id} → {receiver_id} in Conversation {conversation_id}")
+        print(f" Sending Message: {sender_id} → {receiver_id} in Conversation {conversation_id}")
 
-        # 1️⃣ Check if conversation exists
+        #  Check if conversation exists
         conversation = self.db.query(ConversationModel).filter_by(id=conversation_id).first()
         if not conversation:
-            print(f"❌ Conversation Not Found: {conversation_id}")
+            print(f" Conversation Not Found: {conversation_id}")
             raise HTTPException(status_code=404, detail="Conversation not found. Please create a conversation first.")
 
-        # 2️⃣ Save message in MongoDB
+        #  Save message in MongoDB
         new_message = {
             "conversation_id": conversation_id,
             "sender_id": sender_id,
@@ -40,9 +40,9 @@ class MessageService:
         result = await messages_collection.insert_one(new_message)
         message_id = str(result.inserted_id)
 
-        print(f"✅ Message Stored in MongoDB: {message_id}")
+        print(f" Message Stored in MongoDB: {message_id}")
 
-        # 3️⃣ Save metadata in PostgreSQL
+        # 3 Save metadata in PostgreSQL
         new_metadata = MessageMetadataModel(
             conversation_id=conversation_id,
             sender_id=sender_id,
@@ -54,9 +54,9 @@ class MessageService:
         self.db.commit()
         self.db.refresh(new_metadata)
 
-        print(f"✅ Metadata Saved in PostgreSQL")
+        print(f" Metadata Saved in PostgreSQL")
 
-        # 4️⃣ Return response matching `MessageResponse`
+        #  Return response matching `MessageResponse`
         return MessageResponse(
             id=message_id,
             conversation_id=conversation_id,
@@ -69,7 +69,7 @@ class MessageService:
         )
 
       except Exception as e:
-        print(f"❌ Failed to Send Message: {e}")
+        print(f" Failed to Send Message: {e}")
         raise HTTPException(status_code=500, detail="Failed to send message")
 
     async def get_messages(self, conversation_id: str):
