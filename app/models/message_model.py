@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, UUID, ForeignKey, TIMESTAMP, Enum
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.config.database_postgres import Base
-from app.models.conversation_model import ConversationModel  # ✅ Ensure Import
+from app.models.conversation_model import ConversationModel 
 import uuid
 
 class MessageMetadataModel(Base):
@@ -16,5 +16,4 @@ class MessageMetadataModel(Base):
     status = Column(Enum("sent", "delivered", "read", name="message_status"), default="sent")
     created_at = Column(TIMESTAMP, server_default=func.now())
 
-    # ✅ Correct Relationship: Ensure ConversationModel is already defined
     conversation = relationship("ConversationModel", back_populates="messages")
