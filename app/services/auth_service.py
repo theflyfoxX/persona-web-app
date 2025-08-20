@@ -19,7 +19,7 @@ def authenticate_user(db: Session, username: str, password: str) -> UserModel | 
     return user
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    logger.info(f"Token received in get_current_user: {token}")  # ✅ Debugging
+    logger.info(f"Token received in get_current_user: {token}") 
 
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
